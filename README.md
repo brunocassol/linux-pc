@@ -3,7 +3,9 @@ Software and configuration for dev machine.
 
 ## Lubuntu 16.04
 http://lubuntu.me/downloads/
+
 Use RUFUS or UNetbootin to make bootable USB.
+
 Install with third-party apt sources on.
 
 ### Phone USB tether
