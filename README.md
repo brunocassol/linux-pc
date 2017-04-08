@@ -61,11 +61,10 @@ https://golang.org/dl/
 	echo "export PATH=\$PATH:$(go env GOPATH)/bin" >> .profile
 	source ~/.profile
 
-	go get github.com/derekparker/delve/cmd/dlv
-	go get -v github.com/golang/lint/golint
-
 ### Visual Studio Code
 https://code.visualstudio.com/Download
+
+After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install Tools`.
 
 ##### Extensions
 * https://marketplace.visualstudio.com/items?itemName=lukehoban.Go
