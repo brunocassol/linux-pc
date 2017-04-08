@@ -66,6 +66,36 @@ https://code.visualstudio.com/Download
 
 After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install Tools`.
 
+Settings:
+
+	{
+		"workbench.welcome.enabled": false,
+		// Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
+		"go.formatTool": "goimports",
+		// Configure glob patterns for excluding files and folders.
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/.DS_Store": true,
+			"**/debug": true,
+			"**/*.exe": true
+		},
+	// Controls if the minimap is shown
+	"editor.minimap.enabled": true,
+
+	// Render the actual characters on a line (as opposed to color blocks)
+	"editor.minimap.renderCharacters": false,
+
+	// Limit the width of the minimap to render at most a certain number of columns
+	"editor.minimap.maxColumn": 120,
+
+	// A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
+	"editor.mouseWheelScrollSensitivity": 1,
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 1000
+	}
+
 ##### Extensions
 * https://marketplace.visualstudio.com/items?itemName=lukehoban.Go
 
