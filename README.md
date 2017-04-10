@@ -12,6 +12,9 @@ Install with third-party apt sources on.
 	sudo systemctl disable ModemManager.service
 	sudo reboot -h now
 
+### GitKraken
+https://www.gitkraken.com/
+
 ### Wifi - Edimax EW-7811UAC AC600
 	sudo apt-get install linux-headers-$(uname -r) build-essential gcc-5
 	sudo lsusb -v | grep Edimax
@@ -26,14 +29,14 @@ Install with third-party apt sources on.
 todo.
 
 ### Cleanup & Update
-	sudo apt-get purge lxterminal leafpad mtpaint xpad sylpheed sylpheed-doc gnumeric abiword
+	sudo apt-get purge leafpad mtpaint xpad sylpheed sylpheed-doc gnumeric abiword
 	sudo apt-get update && sudo apt-get upgrade
 
 ### Sublime 3
 	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer gnome-terminal lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg
 
 ### nVidia GTX 980
 Search for driver in: http://www.nvidia.com/Download/index.aspx
@@ -48,6 +51,49 @@ Search for driver in: http://www.nvidia.com/Download/index.aspx
 	sudo apt-get install nvidia-375
 
 source: https://linuxconfig.org/how-to-install-the-latest-nvidia-drivers-on-ubuntu-16-04-xenial-xerus
+
+#ROXTerm configuration
+
+Preferences > Edit Current Profile
+* Font: Djavu Sans Mono Book 12
+* Colour Scheme: Tango
+
+Preferences > Edit Current Shortcuts Scheme
+
+	[roxterm shortcuts scheme]
+	File/New Window=<Shift><Control>n
+	File/New Tab=<Control>t
+	File/Close Window=<Shift><Control>q
+	File/Close Tab=<Control>w
+	Tabs/Previous Tab=<Control>Page_Up
+	Tabs/Next Tab=<Control>Tab
+	Edit/Select All=<Shift><Control>a
+	Edit/Copy=<Shift><Control>c
+	Edit/Paste=<Shift><Control>v
+	Edit/Reset And Clear=<Control>k
+	View/Zoom In=<Control>plus
+	View/Zoom Out=<Control>minus
+	View/Normal Size=<Control>0
+	View/Full Screen=F11
+	View/Scroll Up One Line=<Shift>Up
+	View/Scroll Down One Line=<Shift>Down
+	Help/Help=F1
+	Edit/Copy & Paste=<Shift><Control>y
+	Search/Find...=<Shift><Control>f
+	Search/Find Next=<Shift><Control>i
+	Search/Find Previous=<Shift><Control>p
+
+
+### Gnome Terminal
+Shortcuts:
+* reset & clear	ctrl+k
+* new tab		ctrl+t
+* close tab		ctrl+w
+* help		F12
+
+font: DjaVu Sasns Mono 12
+
+Unlimited scrollback.
 
 ### LAMP
 	sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl 
@@ -96,10 +142,13 @@ After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install 
 	"editor.minimap.maxColumn": 120,
 
 	// A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
-	"editor.mouseWheelScrollSensitivity": 1,
-	"files.autoSave": "afterDelay",
-	"files.autoSaveDelay": 1000
+	"editor.mouseWheelScrollSensitivity": 1
 	}
+
+##### Tools
+HTTP Benchmark
+
+	go get -u github.com/rakyll/hey
 
 ### Git configuration
 	git config --global user.name "Bruno Cassol"
@@ -178,16 +227,14 @@ openbox --reconfigure
 ### Configure shortcuts
 
 
-### gnome-terminal
+### LXTerminal
 Shortcuts:
 
 * reset & clear	ctrl+k
 * new tab		ctrl+t
 * close tab		ctrl+w
-* help		F12
 
-font: DjaVu Sasns Mono 12
-Unlimited scrollback.
+100.000 scrollback.
 
 ### Update cache
 
