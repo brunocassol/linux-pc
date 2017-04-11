@@ -25,9 +25,6 @@ https://www.gitkraken.com/
 	sudo make install
 	sudo modprobe 8812au
 
-### Fixed LAN IP
-todo.
-
 ### Cleanup & Update
 	sudo apt-get purge leafpad mtpaint xpad sylpheed sylpheed-doc gnumeric abiword
 	sudo apt-get update && sudo apt-get upgrade
@@ -36,7 +33,7 @@ todo.
 	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm
 
 ### nVidia GTX 980
 Search for driver in: http://www.nvidia.com/Download/index.aspx
@@ -52,7 +49,18 @@ Search for driver in: http://www.nvidia.com/Download/index.aspx
 
 source: https://linuxconfig.org/how-to-install-the-latest-nvidia-drivers-on-ubuntu-16-04-xenial-xerus
 
-#ROXTerm configuration
+### nVidia libEGL bug fix
+
+If you get `/sbin/ldconfig.real: /usr/lib/nvidia-375/libEGL.so.1 is not a symbolic link` after installing packages do this:
+
+	sudo mv /usr/lib/nvidia-375/libEGL.so.1 /usr/lib/nvidia-375/libEGL.so.1.org
+	sudo mv /usr/lib32/nvidia-375/libEGL.so.1 /usr/lib32/nvidia-375/libEGL.so.1.org
+	sudo ln -s /usr/lib/nvidia-375/libEGL.so.375.39 /usr/lib/nvidia-375/libEGL.so.1
+	sudo ln -s /usr/lib32/nvidia-375/libEGL.so.375.39 /usr/lib32/nvidia-375/libEGL.so.1
+
+source: https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers-375/+bug/1662860
+
+###ROXTerm configuration
 
 Preferences > Edit Current Profile
 * Font: Djavu Sans Mono Book 12
@@ -182,6 +190,11 @@ Set:
 subl ~/.config/openbox/lubuntu-rc.xml
 
 	<!-- Custom Keybindings -->
+    <keybind key="W-s">
+      <action name="Execute">
+        <command>subl</command>
+      </action>
+    </keybind>
 	<keybind key="W-Print">
 		<action name="Execute">
 		<command>gnome-screenshot -a -c</command>
@@ -251,7 +264,12 @@ run pavucontrol without root. Disable all but Headset.
 subl ~/.bashrc
 
 	alias gits='git status'
-	alias config='subl ~/.bashrc ~/.config/openbox/lubuntu-rc.xml'
+	alias gitc='git commit -m "."'
+	alias gita='git add . && git status'
+	alias gitp='git push'
+	alias config='subl ~/.bashrc 
+
+	~/.config/openbox/lubuntu-rc.xml'
 	alias bye='sudo -s -- sleep 7200 && pm-suspend'
 
 	search() {
