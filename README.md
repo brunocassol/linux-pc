@@ -33,7 +33,27 @@ https://www.gitkraken.com/
 	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind
+
+### Version sensetive packages (check latest)
+	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
+
+### NodeJS (via NVM)
+
+Install NVM from the website: `https://github.com/creationix/nvm#installation`
+
+Restart terminal.
+
+List nodejs versions: `nvm ls-remote`
+
+Install latest nodejs: `nvm install 7.8.0`
+
+### Redis commander (requires NodeJS)
+see: https://www.npmjs.com/package/redis-commander
+
+	npm install -g redis-commander
+
+	redis-commander
 
 ### nVidia GTX 980
 Search for driver in: http://www.nvidia.com/Download/index.aspx
@@ -158,11 +178,95 @@ HTTP Benchmark
 
 	go get -u github.com/rakyll/hey
 
+### Updated winetricks (Required for Evernote)
+	wget  https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+	chmod +x winetricks 
+	sudo mv -v winetricks /usr/local/bin
+
+source: http://askubuntu.com/questions/755059/how-do-i-get-the-latest-version-of-winetricks-on-ubuntu
+
+### Evernote
+	
+Download and install Evernote:
+	
+	WINEPREFIX="$HOME/.wine32" WINEARCH=win32 wine wineboot
+	winetricks -q ie8
+
+	cd ~/Downloads
+	wine Evernote_6.5.4.4720.exe
+
+source: https://appdb.winehq.org/objectManager.php?sClass=version&iId=34727
+
+### VLC click to pause plugin
+
+	git clone https://github.com/nurupo/vlc-pause-click-plugin/
+	cd vlc-pause-click-plugin/vlc-2.2.x+/
+	make
+	sudo make install
+
+- Restart VLC to load the newly added plugin
+- Go into advanced preferences: Tools -> Preferences -> Show settings -> All
+- Enable/Disable the plugin with a checkbox: (in advanced preferences) Interface -> Control Interfaces -> Pause/Play video on mouse click
+- Enable/Disable the plugin with a checkbox: (in advanced preferences) Video -> Filters -> Pause/Play video on mouse click
+- Change mouse button to the one you want: (in advanced preferences) Video -> Filters -> Pause click -> Mouse Button
+- Restart VLC for settings to take place
+
+### VirtualBox
+
+	sudo bash -c "echo \"deb http://download.virtualbox.org/virtualbox/debian xenial contrib\" >> /etc/apt/sources.list"
+
+	wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+
+	sudo apt-get update
+	sudo apt-get install virtualbox-5.1
+
+source: https://www.virtualbox.org/wiki/Linux_Downloads
+
+### Vagrant
+
+Requires VirtualBox
+
+Ubuntu repo is outdated. Download from https://www.vagrantup.com/downloads.html
+
+Run `vagrant' to create ~/.vagrant.d/
+
+### Docker
+
+Follow https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description
+
+### Redis
+
+### Redis Desktop Manager
+
+Requires packages: `qt58-meta-full qt58charts-no-lgpl`
+
+	git clone --recursive https://github.com/uglide/RedisDesktopManager.git -b alpha4 rdm && cd ./rdm/src
+	./configure
+	source /opt/qt58/bin/qt58-env.sh && qmake && make && sudo make install
+	cd /usr/share/redis-desktop-manager/bin
+	sudo mv qt.conf qt.backup
+
+	sudo ln -s /usr/share/redis-desktop-manager/bin/rdm.sh /usr/local/bin/rdm
+
+Run with:
+
+	rdm
+
+source: http://docs.redisdesktop.com/en/latest/install/#build-from-source
+
+Add item to Preferences -> Main Menu
+
+	name: Redis Desktop Manager
+	command: /usr/share/redis-desktop-manager/bin/rdm
+	icon inside /usr/share/redis-desktop-manager/bin
+
 ### Git configuration
 	git config --global user.name "Bruno Cassol"
 	git config --global user.email brunocassol@gmail.com
 	git config --global push.default simple
 	git config --global color.ui true
+	git config --global core.editor subl
+	git config --global diff.tool meld
 
 ### Leviathan - Kraken x61 watercooler controller
 https://github.com/jaksi/leviathan
@@ -263,12 +367,6 @@ run pavucontrol without root. Disable all but Headset.
 ### .bashrc
 subl ~/.bashrc
 
-	alias gits='git status'
-	alias gitc='git commit -m "."'
-	alias gita='git add . && git status'
-	alias gitp='git push'
-	alias config='subl ~/.bashrc 
-
 	~/.config/openbox/lubuntu-rc.xml'
 	alias bye='sudo -s -- sleep 7200 && pm-suspend'
 
@@ -303,11 +401,35 @@ subl ~/.bashrc
 	# set default keyboard layout. we don't have time to fix IBus shenanigans
 	# setxkbmap -layout gb
 
+	alias gits='git status'
+	alias gitc='git commit -m "."'
+	alias gita='git add . && git status'
+	alias gitp='git push'
+	alias gitd='git diff'
+	alias config='subl ~/.bashrc'
+	alias comparedir='diff -qr '
+
 ### Sexy bash prompt
 https://github.com/twolfson/sexy-bash-prompt
 
 ### Google Drive
-https://github.com/vitalif/grive2
+
+	go get -u -v github.com/ncw/rclone/...
+	rclone config
+
+	name> remote
+	type> 7 google drive
+	client_id> (ENTER, leave blank)
+	client_secret> (ENTER, leave blank)
+	remote_config> Y
+	(accept browser OAuth permissions in browser that will open)
+	is_this_ok?> Y
+	anything else?> q
+
+	rclone -v copy /media/dev/Data/gdrive remote:
+	rclone -v copy remote: /media/dev/Data/gdrive
+
+another option: https://github.com/vitalif/grive2
 
 ### Optional: VirtualBox shared folders
 - mkdir -p /home/dev/vbox_shared/FOLDER_NAME
