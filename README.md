@@ -1,5 +1,5 @@
 # X99 Carbon
-Software and configuration for dev machine.
+Software and configuration for development machine.
 
 ## Lubuntu 16.04
 http://lubuntu.me/downloads/
@@ -33,7 +33,7 @@ https://www.gitkraken.com/
 	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev
 
 ### Version sensetive packages (check latest)
 	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
@@ -145,8 +145,9 @@ https://code.visualstudio.com/Download
 
 After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install Tools`.
 
-##### Settings:
+Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 
+##### Settings:
 	{
 		"workbench.welcome.enabled": false,
 		// Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
@@ -160,17 +161,23 @@ After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install 
 			"**/debug": true,
 			"**/*.exe": true
 		},
-	// Controls if the minimap is shown
-	"editor.minimap.enabled": true,
-
-	// Render the actual characters on a line (as opposed to color blocks)
-	"editor.minimap.renderCharacters": false,
-
-	// Limit the width of the minimap to render at most a certain number of columns
-	"editor.minimap.maxColumn": 120,
-
-	// A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
-	"editor.mouseWheelScrollSensitivity": 1
+		// Controls if the minimap is shown
+		"editor.minimap.enabled": true,
+		// Render the actual characters on a line (as opposed to color blocks)
+		"editor.minimap.renderCharacters": false,
+		// Limit the width of the minimap to render at most a certain number of columns
+		"editor.minimap.maxColumn": 80,
+		// A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
+		"editor.mouseWheelScrollSensitivity": 1,
+		"files.autoSave": "off",
+		"files.autoSaveDelay": 1000,
+		"editor.fontFamily": "'DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
+		"workbench.iconTheme": "vs-seti",
+		// Use gotype on the file currently being edited and report any semantic or syntactic errors found after configured delay.
+		"go.liveErrors": {
+			"enabled": true,
+			"delay": 500
+		}
 	}
 
 ##### Tools
@@ -427,7 +434,7 @@ https://github.com/twolfson/sexy-bash-prompt
 	anything else?> q
 
 	rclone -v copy /media/dev/Data/gdrive remote:
-	rclone -v copy remote: /media/dev/Data/gdrive
+	rclone -v -exclude /gdrive sync remote: /media/dev/Data/gdrive
 
 another option: https://github.com/vitalif/grive2
 
@@ -470,12 +477,12 @@ Add this:
 	Shift_L,   Up,   Shift_L|Button4
 	Shift_L,   Down, Shift_L|Button5
 
-Open menu > Default applications for LXSession > Autostart > Add:
+LXMenu > Preferences > Default applications for LXSession > Autostart > Add:
 
 	imwheel --kill --buttons "4 5"
 
 Run:
-\
+
 	imwheel --kill --buttons "4 5"
 
 Source:
@@ -483,7 +490,22 @@ Source:
 - http://www.webupd8.org/2015/12/how-to-change-mouse-scroll-wheel-speed.html
 - http://askubuntu.com/questions/285689/increase-mouse-wheel-scroll-speed/621140#621140
 
+### Set Default Apps
+
+LXMenu > Preferences > Default applications for LXSession:
+
+- Terminal: ROXTerm
+- Web browser: Google Chrome
+- E-mail: Disable
+- Video player: VLC
+- Text editor: Visual Studio Code (it now remmebers unsaved files)
+- Spreadsheet: Libre Office Calc
+- Document: Libre Office Writter
+
+
 ### Tips
 
-#### Suspend PC after 2 hours
-Use bash alias `bye` to sleep for 2 hours then shutdown PC.
+- Lubuntu shortcuts: https://help.ubuntu.com/community/Lubuntu/Keyboard
+- Use bash alias `bye` to sleep for 2 hours then shutdown PC.
+- CTRL+Y in VLC saves playlist
+- Use aliases defined in .bashrc
