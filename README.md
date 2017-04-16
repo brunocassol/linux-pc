@@ -125,7 +125,7 @@ If you get `/sbin/ldconfig.real: /usr/lib/nvidia-375/libEGL.so.1 is not a symbol
 
 source: https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers-375/+bug/1662860
 
-###ROXTerm configuration
+### ROXTerm configuration
 
 Preferences > Edit Current Profile
 * Font: Djavu Sans Mono Book 12
@@ -156,17 +156,6 @@ Preferences > Edit Current Shortcuts Scheme
 	Search/Find Next=<Shift><Control>i
 	Search/Find Previous=<Shift><Control>p
 
-
-### Gnome Terminal
-Shortcuts:
-* reset & clear	ctrl+k
-* new tab		ctrl+t
-* close tab		ctrl+w
-* help		F12
-
-font: DjaVu Sasns Mono 12
-
-Unlimited scrollback.
 
 ### LAMP
 	sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl 
@@ -418,18 +407,6 @@ Remove this:
 	</mousebind>
 
 openbox --reconfigure
-
-### Configure shortcuts
-
-
-### LXTerminal
-Shortcuts:
-
-* reset & clear	ctrl+k
-* new tab		ctrl+t
-* close tab		ctrl+w
-
-100.000 scrollback.
 
 ### Update cache
 
