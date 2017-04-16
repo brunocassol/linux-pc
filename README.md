@@ -78,7 +78,7 @@ sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.
 
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre
 
 ### Version sensetive packages (check latest)
 	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
@@ -247,6 +247,15 @@ Download and install Evernote:
 	cd ~/Downloads
 	wine Evernote_6.5.4.4720.exe
 
+Evernote menu > Options:
+
+- General > Show advanced > mark
+- General > Check for updates > unmark
+- General > Left panel theme > light
+- Note > Create new note in a new window > unmark
+- Shortcut keys > Clear all
+
+
 source: https://appdb.winehq.org/objectManager.php?sClass=version&iId=34727
 
 ### VLC click to pause plugin
@@ -333,6 +342,23 @@ Disable all plugins but:
 * Clipboard
 * Gnome-session
 * Multithread
+
+### HP wireless printer
+
+- Download latest HPLIP `https://sourceforge.net/projects/hplip/files/hplip/`
+
+	cd ~/Downloads
+	chmod +x hplip-3.16.11.run
+	./hplip-3.16.11.run
+
+- Reboot PC
+- Click on HP tray icon HP tray icon should appear.
+- Click CUPS web interface (opens browser on http://localhost:631)
+- Type linux username/password
+- Click `Add Printer` button
+- Select `Deskjet 3540 series (HP Deskjet 3540 series)` from Discovered Printers
+- Next, Next, Finish
+- Reboot PC
 
 ### Configure OpenBox
 
@@ -478,10 +504,17 @@ https://github.com/twolfson/sexy-bash-prompt
 	is_this_ok?> Y
 	anything else?> q
 
-	rclone -v --retries 1 --exclude /gdocs/ sync remote: /media/dev/Data/gdrive
-	rclone -n -v --retries 1 --exclude /gdocs/ sync /media/dev/Data/gdrive remote:
+Examples (-n is simulate-only):
+
+- rclone -n -v --retries 1 --exclude /gdocs/ sync remote: /media/dev/Data/gdrive
+- rclone -v --retries 1 --exclude /gdocs/ copy /media/dev/Data/gdrive remote:
 
 another option: https://github.com/vitalif/grive2
+
+### Crontabs
+
+	# Upload to Google Drive every 10 minutes
+	*/10 * * * * rclone -v --retries 1 --exclude /gdocs/ copy /media/dev/Data/gdrive remote: >> /home/dev/utils/cronlog.txt
 
 ### Optional: VirtualBox shared folders
 - mkdir -p /home/dev/vbox_shared/FOLDER_NAME
@@ -522,14 +555,6 @@ Add this:
 	Shift_L,   Up,   Shift_L|Button4
 	Shift_L,   Down, Shift_L|Button5
 
-LXMenu > Preferences > Default applications for LXSession > Autostart > Add:
-
-	imwheel --kill --buttons "4 5"
-
-Run:
-
-	imwheel --kill --buttons "4 5"
-
 Source:
 
 - http://www.webupd8.org/2015/12/how-to-change-mouse-scroll-wheel-speed.html
@@ -547,6 +572,19 @@ LXMenu > Preferences > Default applications for LXSession:
 - Spreadsheet: Libre Office Calc
 - Document: Libre Office Writter
 
+Find a DPF file. Right-click > Open with... > Chrome set default
+
+### Autostart applications
+mkdir ~/utils && cd ~/utils
+touch .autostart.sh && chmod +x .autostart.sh && subl .autostart.sh
+
+	sleep 5
+	imwheel --kill --buttons "4 5"
+	env WINEPREFIX="/home/dev/.wine" wine C:\\Program\ Files\ \(x86\)\\Evernote\\Evernote\\Evernote.exe &
+
+LXMenu > Preferences > Default applications for LXSession > Autostart > Add:
+
+	/home/dev/utils/.autostart.sh
 
 ### Tips
 
