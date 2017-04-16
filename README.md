@@ -12,8 +12,21 @@ Install with third-party apt sources on.
 	sudo systemctl disable ModemManager.service
 	sudo reboot -h now
 
+### Fonts
+
+Note: Don't use Segoe UI on Lubuntu desktop because it doesn't looks good. Leave default Ubuntu.
+
+	mkdir ~/.fonts
+
+Copy fonts from gdrive/bin/fonts to ~/.fonts
+
+	sudo fc-cache -fv
+
 ### GitKraken
 https://www.gitkraken.com/
+
+### Disable screen locker
+sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.desktop.bak
 
 ### Wifi - Edimax EW-7811UAC AC600
 	sudo apt-get install linux-headers-$(uname -r) build-essential gcc-5
@@ -32,8 +45,40 @@ https://www.gitkraken.com/
 ### Sublime 3
 	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
 
+##### Settings
+
+	{
+		"always_show_minimap_viewport": true,
+		"font_size": 14,
+		"highlight_line": true,
+
+		// By default, shift+tab will only unindent if the selection spans
+		// multiple lines. When pressing shift+tab at other times, it'll insert a
+		// tab character - this allows tabs to be inserted when tab_completion is
+		// enabled. Set this to true to make shift+tab always unindent, instead of
+		// inserting tabs.
+		"shift_tab_unindent": true,
+
+		// When auto_find_in_selection is enabled, the "Find in Selection" flag
+		// will be enabled automatically when multiple lines of text are selected
+		"auto_find_in_selection": true,
+
+		// Makes tabs with modified files more visible
+		"highlight_modified_tabs": true,
+
+		// Display file encoding in the status bar
+		"show_encoding": true,
+
+		// Display line endings in the status bar
+		"show_line_endings": true,
+
+		// Set to true to removing trailing white space on save
+		"trim_trailing_white_space_on_save": false
+	}
+
+
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer
 
 ### Version sensetive packages (check latest)
 	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
@@ -433,8 +478,8 @@ https://github.com/twolfson/sexy-bash-prompt
 	is_this_ok?> Y
 	anything else?> q
 
-	rclone -v copy /media/dev/Data/gdrive remote:
-	rclone -v -exclude /gdrive sync remote: /media/dev/Data/gdrive
+	rclone -v --retries 1 --exclude /gdocs/ sync remote: /media/dev/Data/gdrive
+	rclone -n -v --retries 1 --exclude /gdocs/ sync /media/dev/Data/gdrive remote:
 
 another option: https://github.com/vitalif/grive2
 
