@@ -156,6 +156,25 @@ Preferences > Edit Current Shortcuts Scheme
 	Search/Find Next=<Shift><Control>i
 	Search/Find Previous=<Shift><Control>p
 
+### Automount disks
+
+Find name of partition to be mounted (/dev/sdb2, /dev/sdc2):
+
+	sudo gnome-disk
+
+Find UUID of partition to be mounted (UUID is better in case you change disk order):
+
+	sudo blkid
+
+Insert mount into fstab:
+
+	sudo subl /etc/fstab
+
+	UUID="0CA490C8A490B5A4"		/media/dev/Data		ntfs		user,fmask=0111,dmask=0000   0   0
+
+Save then issue a mount --all:
+
+	sudo mount -a
 
 ### LAMP
 	sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl 
@@ -361,6 +380,11 @@ Set:
 subl ~/.config/openbox/lubuntu-rc.xml
 
 	<!-- Custom Keybindings -->
+    <keybind key="W-c">
+      <action name="Execute">
+        <command>code</command>
+      </action>
+    </keybind>
     <keybind key="W-s">
       <action name="Execute">
         <command>subl</command>
@@ -420,10 +444,27 @@ sudo apt-get install pulseaudio pavucontrol && pavucontrol
 run pavucontrol without root. Disable all but Headset.
 
 ### .bashrc
-subl ~/.bashrc
 
-	~/.config/openbox/lubuntu-rc.xml'
-	alias bye='sudo -s -- sleep 7200 && pm-suspend'
+	subl ~/.bashrc
+
+	alias gits='git status'
+	alias gita='git add . && git status'
+	alias gitc='git commit -m "."'
+	alias gitp='git push'
+	alias gitd='git diff'
+	alias gitall='git add . && git status && git commit -m "." && git push'
+
+	alias config='subl ~/.bashrc'
+	alias comparedir='diff -qr '
+	alias gitgo='cd ~/go/src/github.com/brunocassol'
+
+	alias config='subl ~/.bashrc ~/.config/openbox/lubuntu-rc.xml'
+	alias bye='sudo bash -c "sleep 7200; pm-suspend"'
+	alias gdrivecompareremote='rclone -n -v --retries 1 --exclude /gdocs/ sync remote: /media/dev/Data/gdrive'
+
+	alias ll='ls -alF'
+	alias la='ls -A'
+	alias l='ls -CF'
 
 	search() {
 		grep -Rils $1 $2
@@ -451,18 +492,6 @@ subl ~/.bashrc
 		echo "'$1' is not a valid file!"
 		fi
 	}
-
-	# Optional: This was used as a Guest in Virtual Box
-	# set default keyboard layout. we don't have time to fix IBus shenanigans
-	# setxkbmap -layout gb
-
-	alias gits='git status'
-	alias gitc='git commit -m "."'
-	alias gita='git add . && git status'
-	alias gitp='git push'
-	alias gitd='git diff'
-	alias config='subl ~/.bashrc'
-	alias comparedir='diff -qr '
 
 ### Sexy bash prompt
 https://github.com/twolfson/sexy-bash-prompt
