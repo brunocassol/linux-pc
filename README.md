@@ -14,7 +14,7 @@ Install with third-party apt sources on.
 
 ### Fonts
 
-Note: Don't use Segoe UI on Lubuntu desktop because it doesn't looks good. Leave default Ubuntu.
+Note: Don't use Segoe UI on Lubuntu desktop because it doesn't look good. Leave default Ubuntu.
 
 	mkdir ~/.fonts
 
@@ -93,13 +93,6 @@ List nodejs versions: `nvm ls-remote`
 
 Install latest nodejs: `nvm install 7.8.0`
 
-### Redis commander (requires NodeJS)
-see: https://www.npmjs.com/package/redis-commander
-
-	npm install -g redis-commander
-
-	redis-commander
-
 ### nVidia GTX 980
 Search for driver in: http://www.nvidia.com/Download/index.aspx
 900 Series > Show all operating systemas > Linux 64-bit > Displays:
@@ -158,6 +151,11 @@ Preferences > Edit Current Shortcuts Scheme
 
 ### Automount disks
 
+Create directory to mount partition in:
+
+	mkdir /media/dev/Data
+	sudo chown dev:dev /media/dev/Data
+
 Find name of partition to be mounted (/dev/sdb2, /dev/sdc2):
 
 	sudo gnome-disk
@@ -170,7 +168,7 @@ Insert mount into fstab:
 
 	sudo subl /etc/fstab
 
-	UUID="0CA490C8A490B5A4"		/media/dev/Data		ntfs		user,fmask=0111,dmask=0000   0   0
+	UUID="0CA490C8A490B5A4"		/media/dev/Data		ntfs		rw,user,uid=dev,gid=dev,default_permissions,allow_other   0   0
 
 Save then issue a mount --all:
 
@@ -200,7 +198,48 @@ After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install 
 
 Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 
-##### Settings:
+##### VS Code Custom keybindings.json:
+	[
+		{
+			"key": "ctrl+shift+a",
+			"command": "-editor.action.blockComment",
+			"when": "editorTextFocus && !editorReadonly"
+		},
+		{
+			"key": "ctrl+;",
+			"command": "editor.action.commentLine"
+		},
+		{
+			"key": "f7",
+			"command": "workbench.action.terminal.runActiveFile"
+		},
+		{
+			"key": "f4",
+			"command": "-search.action.focusNextSearchResult"
+		},
+		{
+			"key": "f4",
+			"command": "workbench.action.tasks.build"
+		},
+		{
+			"key": "ctrl+shift+b",
+			"command": "-workbench.action.tasks.build"
+		},
+		{
+			"key": "ctrl+l",
+			"command": "workbench.action.terminal.clear"
+		},
+		{
+			"key": "ctrl+t",
+			"command": "workbench.action.terminal.toggleTerminal"
+		},
+		{
+			"key": "ctrl+shift+[BracketLeft]",
+			"command": "-workbench.action.terminal.toggleTerminal"
+		}
+	]
+
+##### VS Code settings.json:
 	{
 		"workbench.welcome.enabled": false,
 		// Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
@@ -230,13 +269,39 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 		"go.liveErrors": {
 			"enabled": true,
 			"delay": 500
-		}
+		},
+		"go.useLanguageServer": true,
+		"go.autocompleteUnimportedPackages": true,
+		"telemetry.enableTelemetry": false
 	}
 
-##### Tools
-HTTP Benchmark
+##### VS Code tasks.json:
+	{
+	"version": "0.1.0",
+	"command": "go",
+	"isShellCommand": true,
+	"showOutput": "always",
+	"_runner": "terminal",
+	"tasks": [
+		{
+		"taskName": "go run",
+		"suppressTaskName": true,
+		"isBuildCommand": true,
+		"args": [
+			"run ${file}"
+		]
+		}
+	]
+	}
 
-	go get -u github.com/rakyll/hey
+##### VS Code Tips:
+
+- `F4` - `go run` current file
+- `CTRL` + `;` - Comment line(s)
+- `F8` - Go to next problem
+- `CTRL` + `B` - Show/hide file tree
+- `CTRL` + `T` - Toggle terminal
+- `CTRL` + `L` - Clear terminal
 
 ### Updated winetricks (Required for Evernote)
 	wget  https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
@@ -304,6 +369,8 @@ Run `vagrant' to create ~/.vagrant.d/
 Follow https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description
 
 ### Redis
+
+todo: user docker or vagrant.
 
 ### Redis Desktop Manager
 
@@ -519,8 +586,11 @@ another option: https://github.com/vitalif/grive2
 
 ### Crontabs
 
-	# Upload to Google Drive every 10 minutes
-	*/10 * * * * rclone -v --retries 1 --exclude /gdocs/ copy /media/dev/Data/gdrive remote: >> /home/dev/utils/cronlog.txt
+	mkdir ~/log
+	crontab -e
+
+	# Upload to Google Drive every 30 minutes
+	*/30 * * * * /home/dev/go/bin/rclone -v --retries 1 --exclude /gdocs/ copy /media/dev/Data/gdrive remote: >> /home/dev/log/cron.log 2>&1
 
 ### Optional: VirtualBox shared folders
 - mkdir -p /home/dev/vbox_shared/FOLDER_NAME
