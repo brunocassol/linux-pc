@@ -78,10 +78,16 @@ sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.
 
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg
 
 ### Version sensetive packages (check latest)
 	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
+
+Add qt58 to ld_config
+
+	sudo bash -c "echo \"/opt/qt58/lib\" > /etc/ld.so.conf.d/qt.conf"
+
+	sudo ldconfig
 
 ### NodeJS (via NVM)
 
@@ -175,7 +181,7 @@ Save then issue a mount --all:
 	sudo mount -a
 
 ### LAMP
-	sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl 
+	sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl
 
 ### NodeJS &  Npm
 	sudo apt-get install nodejs
@@ -226,7 +232,7 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 			"command": "-workbench.action.tasks.build"
 		},
 		{
-			"key": "ctrl+l",
+			"key": "ctrl+k",
 			"command": "workbench.action.terminal.clear"
 		},
 		{
@@ -253,6 +259,8 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 			"**/debug": true,
 			"**/*.exe": true
 		},
+	// When enabled, will trim trailing whitespace when saving a file.
+		"files.trimTrailingWhitespace": true,
 		// Controls if the minimap is shown
 		"editor.minimap.enabled": true,
 		// Render the actual characters on a line (as opposed to color blocks)
@@ -272,7 +280,8 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 		},
 		"go.useLanguageServer": true,
 		"go.autocompleteUnimportedPackages": true,
-		"telemetry.enableTelemetry": false
+		"telemetry.enableTelemetry": false,
+		"telemetry.enableCrashReporter": false
 	}
 
 ##### VS Code tasks.json:
@@ -294,26 +303,85 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 	]
 	}
 
+##### VS Code always highlight minimap
+
+Change file
+C:\Program Files (x86)\Microsoft VS Code\resources\app\out\vs\workbench\electron-browser\workbench.main.css
+
+.minimap-slider{opacity:0 --> .minimap-slider{opacity:1
+
+for highlight always
+
+VSCode will complain that the installation is corrupt. To disable this use this setting:
+
+	"telemetry.enableCrashReporter": false
+
 ##### VS Code Tips:
 
 - `F4` - `go run` current file
-- `CTRL` + `;` - Comment line(s)
+- `F7` - Runs go file in terminal if it is executable and has this shebang: `//usr/bin/env go run "$0" "$@"; exit "$?"`
 - `F8` - Go to next problem
+- `CTRL` + `;` - Comment line(s)
 - `CTRL` + `B` - Show/hide file tree
 - `CTRL` + `T` - Toggle terminal
 - `CTRL` + `L` - Clear terminal
+- `F1` - list commands
+- `CTRL` + `P` - Open file
+- `CTRL` + `SHIFT` + `P`: Go: Add tags... Add json tags to structure using tool
 
 ### Updated winetricks (Required for Evernote)
 	wget  https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-	chmod +x winetricks 
+	chmod +x winetricks
 	sudo mv -v winetricks /usr/local/bin
 
 source: http://askubuntu.com/questions/755059/how-do-i-get-the-latest-version-of-winetricks-on-ubuntu
 
+### Chrome Remote Desktop
+
+	To fix this, please follow these steps:
+
+	Stop it:
+	/opt/google/chrome-remote-desktop/chrome-remote-desktop --stop
+
+	Back it up:
+	cp /opt/google/chrome-remote-desktop/chrome-remote-desktop /opt/google/chrome-remote-desktop/chrome-remote-desktop.orig
+
+	Edit:  /opt/google/chrome-remote-desktop/chrome-remote-desktop
+
+	Change this to the size I wanted.
+	DEFAULT_SIZES = "2560x1440"
+
+	Change this to desktop zero which is the console.
+	FIRST_X_DISPLAY_NUMBER = 0
+
+	Comment this out so it doesn't increment for a new desktop.:
+	#while os.path.exists(X_LOCK_FILE_TEMPLATE % display):
+	#  display += 1
+
+	Comment this out so that it doesn't attempt to start a new display session since the console on desktop zero is already running :
+		#logging .info("Starting %s on display :%d" % (xvfb, display))
+		#screen_option = "%dx%dx24" % (max_width, max_height)
+		#self .x_proc = subprocess.Popen(
+		#    [xvfb, ":%d" % display,
+		#     "-auth", x_auth_file,
+		#     "-nolisten", "tcp",
+		#     "-noreset",
+		#     "-screen", "0", screen_option
+		#    ] + extra_x_args)
+		#if not self.x_proc.pid:
+		#  raise Exception("Could not start Xvfb.")
+
+	Start it:
+	/opt/google/chrome-remote-desktop/chrome-remote-desktop --start
+
+	DONE.  Now it attaches to Unity's existing X Server on display :0.﻿
+
+source: https://productforums.google.com/d/msg/chrome/LJgIh-IJ9Lk/JXxoVc-lDxYJ
+
 ### Evernote
-	
+
 Download and install Evernote:
-	
+
 	WINEPREFIX="$HOME/.wine32" WINEARCH=win32 wine wineboot
 	winetricks -q ie8
 
@@ -384,6 +452,8 @@ Requires packages: `qt58-meta-full qt58charts-no-lgpl`
 
 	sudo ln -s /usr/share/redis-desktop-manager/bin/rdm.sh /usr/local/bin/rdm
 
+export LD_LIBRARY_PATH=/opt/qt58/lib
+
 Run with:
 
 	rdm
@@ -408,7 +478,7 @@ Add item to Preferences -> Main Menu
 https://github.com/jaksi/leviathan
 
 	sudo levctl -s 30 -m off
- 
+
 ### Configure kupfer
 auto start & hotkey
 
@@ -472,10 +542,10 @@ subl ~/.config/openbox/lubuntu-rc.xml
 		<command>x-terminal-emulator</command>
 		</action>
 	</keybind>
-	<keybind key="W-l">      
-		<action name="Execute">        
-		<command>dm-tool lock</command>      
-		</action>    
+	<keybind key="W-l">
+		<action name="Execute">
+		<command>dm-tool lock</command>
+		</action>
 	</keybind>
 
 Replace <keybind key="W-Up"> to:
@@ -504,8 +574,8 @@ openbox --reconfigure
 	sudo apt-file update
 	sudo updatedb
 
-### Corsair H20100 Headset 
-	
+### Corsair H20100 Headset
+
 sudo apt-get install pulseaudio pavucontrol && pavucontrol
 
 run pavucontrol without root. Disable all but Headset.
@@ -533,6 +603,9 @@ run pavucontrol without root. Disable all but Headset.
 	alias la='ls -A'
 	alias l='ls -CF'
 
+	pidusingport() {
+		sudo netstat -nlp | grep :$1
+	}
 	search() {
 		grep -Rils $1 $2
 	}
