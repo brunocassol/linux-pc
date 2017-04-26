@@ -22,9 +22,6 @@ Copy fonts from gdrive/bin/fonts to ~/.fonts
 
 	sudo fc-cache -fv
 
-### GitKraken
-https://www.gitkraken.com/
-
 ### Disable screen locker
 sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.desktop.bak
 
@@ -78,7 +75,7 @@ sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.
 
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg virtualbox gameconqueror
 
 ### Version sensetive packages (check latest)
 	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
@@ -663,7 +660,7 @@ another option: https://github.com/vitalif/grive2
 	crontab -e
 
 	# Upload to Google Drive every 30 minutes
-	*/30 * * * * /home/dev/go/bin/rclone -v --retries 1 --exclude /gdocs/ copy /media/dev/Data/gdrive remote: >> /home/dev/log/cron.log 2>&1
+	*/30 * * * * /home/dev/go/bin/rclone -v --retries 1 --exclude /gdocs/ copy /media/dev/Data/gdrive remote: > /home/dev/log/cron.log 2>&1
 
 ### Optional: VirtualBox shared folders
 - mkdir -p /home/dev/vbox_shared/FOLDER_NAME
