@@ -25,6 +25,16 @@ Copy fonts from gdrive/bin/fonts to ~/.fonts
 ### Disable screen locker
 sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.desktop.bak
 
+### Pin linux kernel (prevent updates)
+
+	for i in $(dpkg -l "*$(uname -r)*" | grep image | awk '{print $2}'); do echo $i hold | sudo dpkg --set-selections; done
+
+Remove pin:
+
+	for i in $(dpkg -l "*$(uname -r)*" | grep image | awk '{print $2}'); do echo $i install | sudo dpkg --set-selections; done
+
+source: https://askubuntu.com/questions/178324/how-to-skip-kernel-update
+
 ### Wifi - Edimax EW-7811UAC AC600
 	sudo apt-get install linux-headers-$(uname -r) build-essential gcc-5
 	sudo lsusb -v | grep Edimax
@@ -34,6 +44,25 @@ sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.
 	make CC=/usr/bin/gcc-5
 	sudo make install
 	sudo modprobe 8812au
+
+If wifi stops connecting but still lists networks:
+
+- run connection editor with `sudo nm-connection-editor`
+- edit wifi you previously tried to connect to
+- type password
+- mark [x] allow all users to connect
+- save
+- restart network with: `sudo service network-manager restart`
+
+##### Extra info
+
+- modules installed to: `/lib/modules/4.4.0-75-generic/kernel/drivers/net/wireless`
+- install mod with: `sudo insmod 8812au.ko`
+- remove mod with `sudo rmmod 8812au`
+- restart network applet with: `killall nm-applet && nm-applet &`
+- restart network service: `sudo service network-manager restart`
+- invoke connection editor manually: nm-connection-editor
+- alternative driver: https://github.com/gnab/rtl8812au
 
 ### Cleanup & Update
 	sudo apt-get purge leafpad mtpaint xpad sylpheed sylpheed-doc gnumeric abiword
