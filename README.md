@@ -602,9 +602,72 @@ openbox --reconfigure
 
 ### Corsair H20100 Headset
 
+Use pulseaudio. Much better.
+
 sudo apt-get install pulseaudio pavucontrol && pavucontrol
 
 run pavucontrol without root. Disable all but Headset.
+
+##### Configuring volume controls
+
+To set Pulseaudio volume using commandline:
+
+	amixer -D pulse sset Master 5%+
+	amixer -D pulse sset Master 5%-
+
+Run `xev` and scroll headset volume control to get keys (XF86AudioLowerVolume and XF86AudioRaiseVolume):
+
+	FocusOut event, serial 48, synthetic NO, window 0x1800001,
+	    mode NotifyGrab, detail NotifyAncestor
+
+	FocusIn event, serial 48, synthetic NO, window 0x1800001,
+	    mode NotifyUngrab, detail NotifyAncestor
+
+	KeymapNotify event, serial 48, synthetic NO, window 0x0,
+	    keys:  2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   4   
+	           0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   
+
+	KeyRelease event, serial 48, synthetic NO, window 0x1800001,
+	    root 0x1d1, subw 0x0, time 4969627, (-2174,124), root:(207,1358),
+	    state 0x0, keycode 122 (keysym 0x1008ff11, XF86AudioLowerVolume), same_screen YES,
+	    XLookupString gives 0 bytes: 
+	    XFilterEvent returns: False
+
+	FocusOut event, serial 48, synthetic NO, window 0x1800001,
+	    mode NotifyGrab, detail NotifyAncestor
+
+	FocusIn event, serial 48, synthetic NO, window 0x1800001,
+	    mode NotifyUngrab, detail NotifyAncestor
+
+	KeymapNotify event, serial 48, synthetic NO, window 0x0,
+	    keys:  2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   8   
+	           0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   
+
+	KeyRelease event, serial 48, synthetic NO, window 0x1800001,
+	    root 0x1d1, subw 0x0, time 4970164, (-2174,124), root:(207,1358),
+	    state 0x0, keycode 123 (keysym 0x1008ff13, XF86AudioRaiseVolume), same_screen YES,
+	    XLookupString gives 0 bytes: 
+	    XFilterEvent returns: False
+
+Set openbox shortcuts to call the volume commands:
+
+	subl ~/.config/openbox/lubuntu-rc.xml
+
+Make sure the volume shotcuts look like this:
+
+    <!-- Keybinding for Volume management -->
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute">
+        <command>amixer -D pulse sset Master 5%+ unmute</command>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute">
+        <command>amixer -D pulse sset Master 5%- unmute</command>
+      </action>
+    </keybind>
+
+source: https://unix.stackexchange.com/questions/62887/volume-hot-keys-in-crunchbang-dont-work
 
 ### .bashrc
 
