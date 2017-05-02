@@ -722,10 +722,10 @@ source: https://unix.stackexchange.com/questions/62887/volume-hot-keys-in-crunch
 	alias la='ls -A'
 	alias l='ls -CF'
 
+	alias dockerphpstorm='docker run --name phpstorm -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.PhpStorm2017.1:/home/duser/.PhpStorm2017.1 -v ~/php:/workspace brunocassol/phpstorm'
+	alias dockernginxphp='docker run --name nginx-php -d nginx-php-fpm'
 	alias dockeraptcachestart='docker run --name apt-cacher-ng -d --restart=always --publish 3142:3142 --volume /srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng sameersbn/apt-cacher-ng:latest'
 	alias dockeraptcachelog='docker exec -it apt-cacher-ng tail -f /var/log/apt-cacher-ng/apt-cacher.log'
-	alias dockerphpstorm='docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.PhpStorm2017.1:/home/duser/.PhpStorm2017.1 -v ~/php:/workspace brunocassol/phpstorm'
-	alias dockernginxphp='docker run -d nginx-php-fpm'
 
 	pidusingport() {
 	    sudo netstat -nlp | grep :$1
