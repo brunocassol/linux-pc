@@ -9,12 +9,15 @@ Use RUFUS or UNetbootin to make bootable USB.
 Install with third-party apt sources on.
 
 ### Phone USB tether
+
+If it keeps disconnecting do:
+
 	sudo systemctl disable ModemManager.service
 	sudo reboot -h now
 
 ### Fonts
 
-Note: Don't use Segoe UI on Lubuntu desktop because it doesn't look good. Leave default Ubuntu.
+Note: Don't use Segoe UI on Lubuntu desktop because it looks bad. Leave default Ubuntu font.
 
 	mkdir ~/.fonts
 
@@ -34,6 +37,10 @@ Remove pin:
 	for i in $(dpkg -l "*$(uname -r)*" | grep image | awk '{print $2}'); do echo $i install | sudo dpkg --set-selections; done
 
 source: https://askubuntu.com/questions/178324/how-to-skip-kernel-update
+
+### PHPStorm on Docker
+
+see https://github.com/brunocassol/phpstorm.git
 
 ### Wifi - Edimax EW-7811UAC AC600
 	sudo apt-get install linux-headers-$(uname -r) build-essential gcc-5
@@ -61,7 +68,7 @@ If wifi stops connecting but still lists networks:
 - remove mod with `sudo rmmod 8812au`
 - restart network applet with: `killall nm-applet && nm-applet &`
 - restart network service: `sudo service network-manager restart`
-- invoke connection editor manually: nm-connection-editor
+- invoke connection editor manually: `nm-connection-editor`
 - alternative driver: https://github.com/gnab/rtl8812au
 
 ### Cleanup & Update
@@ -70,6 +77,16 @@ If wifi stops connecting but still lists networks:
 
 ### Sublime 3
 	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
+
+### Docker apt-cacher-ng
+
+see: https://github.com/sameersbn/docker-apt-cacher-ng
+
+### handbreak
+
+	sudo add-apt-repository ppa:stebbins/handbrake-releases
+	sudo apt-get update
+	sudo apt-get install handbrake-gtk handbrake-cli
 
 ##### Settings
 
@@ -206,8 +223,14 @@ Save then issue a mount --all:
 
 	sudo mount -a
 
-### LAMP
-	sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl
+### nginx & PHP 7.1
+	mkdir ~/docker
+	cd ~/docker
+	git clone https://github.com/ngineered/nginx-php-fpm.git
+	cd nginx-php-fpm
+	
+
+old: sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl
 
 ### NodeJS &  Npm
 	sudo apt-get install nodejs
@@ -462,6 +485,13 @@ Run `vagrant' to create ~/.vagrant.d/
 
 Follow https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description
 
+To use docker without sudo:
+
+	sudo groupadd docker
+	sudo gpasswd -a ${USER} docker
+	sudo service docker restart
+	newgrp docker
+
 ### Redis
 
 todo: user docker or vagrant.
@@ -612,8 +642,8 @@ run pavucontrol without root. Disable all but Headset.
 
 To set Pulseaudio volume using commandline:
 
-	amixer -D pulse sset Master 5%+
-	amixer -D pulse sset Master 5%-
+	amixer -D pulse sset Master 8%+
+	amixer -D pulse sset Master 8%-
 
 Run `xev` and scroll headset volume control to get keys (XF86AudioLowerVolume and XF86AudioRaiseVolume):
 
@@ -658,12 +688,12 @@ Make sure the volume shotcuts look like this:
     <!-- Keybinding for Volume management -->
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
-        <command>amixer -D pulse sset Master 5%+ unmute</command>
+        <command>amixer -D pulse sset Master 8%+ unmute</command>
       </action>
     </keybind>
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
-        <command>amixer -D pulse sset Master 5%- unmute</command>
+        <command>amixer -D pulse sset Master 8%- unmute</command>
       </action>
     </keybind>
 
@@ -692,34 +722,39 @@ source: https://unix.stackexchange.com/questions/62887/volume-hot-keys-in-crunch
 	alias la='ls -A'
 	alias l='ls -CF'
 
+	alias dockeraptcachestart='docker run --name apt-cacher-ng -d --restart=always --publish 3142:3142 --volume /srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng sameersbn/apt-cacher-ng:latest'
+	alias dockeraptcachelog='docker exec -it apt-cacher-ng tail -f /var/log/apt-cacher-ng/apt-cacher.log'
+	alias dockerphpstorm='docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.PhpStorm2017.1:/home/duser/.PhpStorm2017.1 -v ~/php:/workspace brunocassol/phpstorm'
+	alias dockernginxphp='docker run -d nginx-php-fpm'
+
 	pidusingport() {
-		sudo netstat -nlp | grep :$1
+	    sudo netstat -nlp | grep :$1
 	}
 	search() {
-		grep -Rils $1 $2
+	    grep -Rils $1 $2
 	}
 	winprocess() {
-		xprop | grep WM_CLASS
+	    xprop | grep WM_CLASS
 	}
 	extract () {
-		if [ -f $1 ] ; then
-		case $1 in
-			*.tar.bz2)   tar xvjf $1    ;;
-			*.tar.gz)    tar xvzf $1    ;;
-			*.bz2)       bunzip2 $1     ;;
-			*.rar)       unrar x $1       ;;
-			*.gz)        gunzip $1      ;;
-			*.tar)       tar xvf $1     ;;
-			*.tbz2)      tar xvjf $1    ;;
-			*.tgz)       tar xvzf $1    ;;
-			*.zip)       unzip $1       ;;
-			*.Z)         uncompress $1  ;;
-			*.7z)        7z x $1        ;;
-			*)           echo "don't know how to extract '$1'..." ;;
-		esac
-		else
-		echo "'$1' is not a valid file!"
-		fi
+	    if [ -f $1 ] ; then
+	    case $1 in
+	        *.tar.bz2)   tar xvjf $1    ;;
+	        *.tar.gz)    tar xvzf $1    ;;
+	        *.bz2)       bunzip2 $1     ;;
+	        *.rar)       unrar x $1       ;;
+	        *.gz)        gunzip $1      ;;
+	        *.tar)       tar xvf $1     ;;
+	        *.tbz2)      tar xvjf $1    ;;
+	        *.tgz)       tar xvzf $1    ;;
+	        *.zip)       unzip $1       ;;
+	        *.Z)         uncompress $1  ;;
+	        *.7z)        7z x $1        ;;
+	        *)           echo "don't know how to extract '$1'..." ;;
+	    esac
+	    else
+	    echo "'$1' is not a valid file!"
+	    fi
 	}
 
 ### Sexy bash prompt
