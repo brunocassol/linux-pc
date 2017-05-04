@@ -230,7 +230,10 @@ Save then issue a mount --all:
 	cd nginx-php-fpm
 	
 
-old: sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev apache2 php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl
+old: sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl
+
+### Lubuntu clock ###
+Right click, format: %A %d/%m/%Y %B %r (%j)
 
 ### NodeJS &  Npm
 	sudo apt-get install nodejs
@@ -248,6 +251,7 @@ https://code.visualstudio.com/Download
 
 ##### Extensions
 * https://marketplace.visualstudio.com/items?itemName=lukehoban.Go
+* https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker
 
 After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install Tools`.
 
@@ -296,41 +300,42 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 
 ##### VS Code settings.json:
 	{
-		"workbench.welcome.enabled": false,
-		// Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
-		"go.formatTool": "goimports",
-		// Configure glob patterns for excluding files and folders.
-		"files.exclude": {
-			"**/.git": true,
-			"**/.svn": true,
-			"**/.hg": true,
-			"**/.DS_Store": true,
-			"**/debug": true,
-			"**/*.exe": true
-		},
-	// When enabled, will trim trailing whitespace when saving a file.
-		"files.trimTrailingWhitespace": true,
-		// Controls if the minimap is shown
-		"editor.minimap.enabled": true,
-		// Render the actual characters on a line (as opposed to color blocks)
-		"editor.minimap.renderCharacters": false,
-		// Limit the width of the minimap to render at most a certain number of columns
-		"editor.minimap.maxColumn": 80,
-		// A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
-		"editor.mouseWheelScrollSensitivity": 1,
-		"files.autoSave": "off",
-		"files.autoSaveDelay": 1000,
-		"editor.fontFamily": "'DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
-		"workbench.iconTheme": "vs-seti",
-		// Use gotype on the file currently being edited and report any semantic or syntactic errors found after configured delay.
-		"go.liveErrors": {
-			"enabled": true,
-			"delay": 500
-		},
-		"go.useLanguageServer": true,
-		"go.autocompleteUnimportedPackages": true,
-		"telemetry.enableTelemetry": false,
-		"telemetry.enableCrashReporter": false
+	    "workbench.welcome.enabled": false,
+	    // Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
+	    "go.formatTool": "goimports",
+	    // Configure glob patterns for excluding files and folders.
+	    "files.exclude": {
+	        "**/.git": true,
+	        "**/.svn": true,
+	        "**/.hg": true,
+	        "**/.DS_Store": true,
+	        "**/debug": true,
+	        "**/*.exe": true
+	    },
+	  // When enabled, will trim trailing whitespace when saving a file.
+	    "files.trimTrailingWhitespace": true,
+	    // Controls if the minimap is shown
+	    "editor.minimap.enabled": true,
+	    // Render the actual characters on a line (as opposed to color blocks)
+	    "editor.minimap.renderCharacters": false,
+	    // Limit the width of the minimap to render at most a certain number of columns
+	    "editor.minimap.maxColumn": 80,
+	    // A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
+	    "editor.mouseWheelScrollSensitivity": 1,
+	    "files.autoSave": "off",
+	    "files.autoSaveDelay": 1000,
+	    "editor.fontFamily": "'DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
+	    "workbench.iconTheme": "vs-seti",
+	    // Use gotype on the file currently being edited and report any semantic or syntactic errors found after configured delay.
+	    "go.liveErrors": {
+	        "enabled": true,
+	        "delay": 500
+	    },
+	    "go.useLanguageServer": false,
+	    "go.autocompleteUnimportedPackages": true,
+	    "telemetry.enableTelemetry": false,
+	    "telemetry.enableCrashReporter": false,
+	    "editor.fontSize": 16
 	}
 
 ##### VS Code tasks.json:
@@ -483,7 +488,7 @@ Run `vagrant' to create ~/.vagrant.d/
 
 ### Docker
 
-Follow https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description
+Follow https://store.docker.com/editions/community/docker-ce-server-ubuntu
 
 To use docker without sudo:
 
@@ -810,7 +815,9 @@ Paste this:
 	autologin-user=dev
 
 
-### Logitech G303 scroll speed and programming
+### Logitech G303
+
+##### Scroll speed and programming
 
 	sudo apt-get install imwheel
 
@@ -832,6 +839,15 @@ Source:
 
 - http://www.webupd8.org/2015/12/how-to-change-mouse-scroll-wheel-speed.html
 - http://askubuntu.com/questions/285689/increase-mouse-wheel-scroll-speed/621140#621140
+
+##### Broken mouse button: 1 click = multiple clicks fix
+Diagnose it with:
+	xev | grep ButtonRelease
+
+Fix with:
+	https://www.youtube.com/watch?v=eDoXMJyimDU
+
+Note: you need a very good mini screwdriver.
 
 ### Set Default Apps
 
