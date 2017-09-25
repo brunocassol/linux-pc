@@ -28,6 +28,32 @@ Copy fonts from gdrive/bin/fonts to ~/.fonts
 ### Disable screen locker
 sudo mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.desktop.bak
 
+### Transparency Composition in LXDE
+
+source: https://askubuntu.com/questions/548799/how-do-i-start-compositing-in-lxde-for-programs-like-docky
+
+	sudo apt-get update && sudo apt-get install xcompmgr
+	subl ~/.config/autostart/xcompmgr.desktop
+
+Paste and save:
+
+	[Desktop Entry]
+	Name=XCompositing Manager
+	GenericName=Compiz
+	Comment=This enables Compositing for LXDE
+	Exec=xcompmgr -n
+	Terminal=false
+	Type=Application
+	Icon=dropbox
+	Categories=
+	StartupNotify=false
+	Name[en_US]=Xcompmgr
+	Comment[en_US]=This was created by Geary
+
+Start using xcompmgr without havign to retart. Press Win+R:
+
+	xcompmgr -n
+
 ### Pin linux kernel (prevent updates)
 
 	for i in $(dpkg -l "*$(uname -r)*" | grep image | awk '{print $2}'); do echo $i hold | sudo dpkg --set-selections; done
@@ -43,6 +69,8 @@ source: https://askubuntu.com/questions/178324/how-to-skip-kernel-update
 see https://github.com/brunocassol/phpstorm.git
 
 ### Wifi - Edimax EW-7811UAC AC600
+	
+	mkdir -p ~/drivers
 	sudo apt-get install linux-headers-$(uname -r) build-essential gcc-5
 	sudo lsusb -v | grep Edimax
 
@@ -52,6 +80,24 @@ see https://github.com/brunocassol/phpstorm.git
 	sudo make install
 	sudo modprobe 8812au
 
+To reinstall wifi after kernel upgrade:
+	cd ~/drivers/rtl8812AU && make && sudo make install && sudo modprobe 8812au
+
+### Wifi DKMS:
+cd ~/drivers/rtl8812AU
+sudo su
+DRV_NAME=rtl8812AU
+DRV_VERSION=4.3.14
+mkdir /usr/src/${DRV_NAME}-${DRV_VERSION}
+git archive driver-${DRV_VERSION} | tar -x -C /usr/src/${DRV_NAME}-${DRV_VERSION}
+dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
+dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+
+### Wifi Delete DKMS ###
+dkms remove rtl8812AU/4.3.14 --all
+
+
 If wifi stops connecting but still lists networks:
 
 - run connection editor with `sudo nm-connection-editor`
@@ -59,7 +105,7 @@ If wifi stops connecting but still lists networks:
 - type password
 - mark [x] allow all users to connect
 - save
-- restart network with: `sudo service network-manager restart`
+- restart network with:		sudo service network-manager restart
 
 ##### Extra info
 
@@ -72,11 +118,11 @@ If wifi stops connecting but still lists networks:
 - alternative driver: https://github.com/gnab/rtl8812au
 
 ### Cleanup & Update
-	sudo apt-get purge leafpad mtpaint xpad sylpheed sylpheed-doc gnumeric abiword
+	sudo apt-get purge leafpad mtpaint xpad sylpheed sylpheed-doc gnumeric abiword winbind samba
 	sudo apt-get update && sudo apt-get upgrade
 
 ### Sublime 3
-	sudo add-apt-repository ppa:webupd8team/sublime-text-3 && sudo apt-get install sublime-text-installer
+	https://www.sublimetext.com/docs/3/linux_repositories.html#apt
 
 ### Docker apt-cacher-ng
 
@@ -121,7 +167,14 @@ see: https://github.com/sameersbn/docker-apt-cacher-ng
 
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot sqliteman libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld winbind gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg virtualbox gameconqueror
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg virtualbox gameconqueror lm-sensors bzr inkscape xclip
+
+
+### SQLiteBrowser
+
+	sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser
+	sudo apt-get update
+	sudo apt-get install sqlitebrowser
 
 ### Version sensetive packages (check latest)
 	sudo apt-get install qt58-meta-full qt58charts-no-lgpl
@@ -217,7 +270,7 @@ Insert mount into fstab:
 
 	sudo subl /etc/fstab
 
-	UUID="0CA490C8A490B5A4"		/media/dev/Data		ntfs		rw,user,uid=dev,gid=dev,default_permissions,allow_other   0   0
+	UUID="0CA490C8A490B5A4"		/media/dev/Data		ntfs		user,exec,uid=dev,gid=dev,default_permissions,allow_other   0   0
 
 Save then issue a mount --all:
 
@@ -239,12 +292,26 @@ Right click, format: %A %d/%m/%Y %B %r (%j)
 	sudo apt-get install nodejs
 
 ### Golang
-https://golang.org/dl/
+
+##### Install
+
+	Download from https://golang.org/dl/
 
 	tar -C /usr/local -xzf go1.8.linux-amd64.tar.gz
 	echo "export PATH=\$PATH:/usr/local/go/bin" >> .profile
 	echo "export PATH=\$PATH:$(go env GOPATH)/bin" >> .profile
 	source ~/.profile
+
+##### Upgrade
+
+Download new version from https://golang.org/dl/
+
+	go version
+	sudo rm -rf /usr/local/go
+	cd ~/Downloads
+	sudo tar -C /usr/local -xzf go1.9.linux-amd64.tar.gz
+	go version
+
 
 ### Visual Studio Code
 https://code.visualstudio.com/Download
@@ -301,6 +368,7 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 ##### VS Code settings.json:
 	{
 	    "workbench.welcome.enabled": false,
+	    "editor.fontSize": 14,
 	    // Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
 	    "go.formatTool": "goimports",
 	    // Configure glob patterns for excluding files and folders.
@@ -324,7 +392,7 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 	    "editor.mouseWheelScrollSensitivity": 1,
 	    "files.autoSave": "off",
 	    "files.autoSaveDelay": 1000,
-	    "editor.fontFamily": "'DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
+	    "editor.fontFamily": "'Ubuntu Mono','DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
 	    "workbench.iconTheme": "vs-seti",
 	    // Use gotype on the file currently being edited and report any semantic or syntactic errors found after configured delay.
 	    "go.liveErrors": {
@@ -334,8 +402,7 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 	    "go.useLanguageServer": false,
 	    "go.autocompleteUnimportedPackages": true,
 	    "telemetry.enableTelemetry": false,
-	    "telemetry.enableCrashReporter": false,
-	    "editor.fontSize": 16
+	    "telemetry.enableCrashReporter": false
 	}
 
 ##### VS Code tasks.json:
@@ -488,7 +555,15 @@ Run `vagrant' to create ~/.vagrant.d/
 
 ### Docker
 
-Follow https://store.docker.com/editions/community/docker-ce-server-ubuntu
+docker-ce:
+	https://docs.docker.com/engine/installation/linux/ubuntu/#install-using-the-repository
+
+docker-compose:
+	https://docs.docker.com/compose/install/
+
+	sudo su
+	curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+	chmod +x /usr/local/bin/docker-compose
 
 To use docker without sudo:
 
@@ -578,6 +653,11 @@ Set:
 subl ~/.config/openbox/lubuntu-rc.xml
 
 	<!-- Custom Keybindings -->
+    <keybind key="W-q">
+      <action name="Execute">
+        <command>/home/dev/Qt/Tools/QtCreator/bin/qtcreator</command>
+      </action>
+    </keybind>
     <keybind key="W-c">
       <action name="Execute">
         <command>code</command>
@@ -628,7 +708,41 @@ Remove this:
 		</action>
 	</mousebind>
 
+Also remove this:
+      <mousebind button="Middle" action="Press">
+        <action name="Lower"/>
+        <action name="FocusToBottom"/>
+        <action name="Unfocus"/>
+      </mousebind>
+      <mousebind button="Middle" action="Click">
+        <action name="ToggleMaximize">
+          <direction>vertical</direction>
+        </action>
+      </mousebind>
+      <mousebind button="A-Middle" action="Press">
+        <action name="Lower"/>
+        <action name="FocusToBottom"/>
+        <action name="Unfocus"/>
+      </mousebind>
+
 openbox --reconfigure
+
+### Fix reconnect wifi after suspend
+
+	cd /lib/systemd/system-sleep/
+	sudo subl restart_wifi
+
+	#!/bin/sh
+	set -e
+
+	if [ "$2" = "suspend" ] || [ "$2" = "hybrid-sleep" ]; then
+	    case "$1" in
+	        pre) echo "Suspending. Will restart network-manager after." ;;
+	        post) sleep 5; /etc/init.d/network-manager restart ;;
+	    esac
+	fi
+
+	sudo chmod +x restart_wifi
 
 ### Update cache
 
@@ -714,6 +828,7 @@ source: https://unix.stackexchange.com/questions/62887/volume-hot-keys-in-crunch
 	alias gitp='git push'
 	alias gitd='git diff'
 	alias gitall='git add . && git status && git commit -m "." && git push'
+	alias wififix='cd /media/dev/Data/downloads/Drivers/Carbon-x99/rtl8812AU && sudo make install && sudo modprobe 8812au'
 
 	alias config='subl ~/.bashrc'
 	alias comparedir='diff -qr '
@@ -842,7 +957,12 @@ Source:
 
 ##### Broken mouse button: 1 click = multiple clicks fix
 Diagnose it with:
+
 	xev | grep ButtonRelease
+
+	or
+
+	http://unixpapa.com/js/testmouse.html
 
 Fix with:
 	https://www.youtube.com/watch?v=eDoXMJyimDU
