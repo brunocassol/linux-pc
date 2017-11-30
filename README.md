@@ -69,7 +69,7 @@ source: https://askubuntu.com/questions/178324/how-to-skip-kernel-update
 see https://github.com/brunocassol/phpstorm.git
 
 ### Wifi - Edimax EW-7811UAC AC600
-	
+
 	mkdir -p ~/drivers
 	sudo apt-get install linux-headers-$(uname -r) build-essential gcc-5
 	sudo lsusb -v | grep Edimax
@@ -81,7 +81,7 @@ see https://github.com/brunocassol/phpstorm.git
 	sudo modprobe 8812au
 
 To reinstall wifi after kernel upgrade:
-	cd ~/drivers/rtl8812AU && make && sudo make install && sudo modprobe 8812au
+	cd ~/drivers/rtl8812AU && make CC=/usr/bin/gcc-5 && sudo make install && sudo modprobe 8812au
 
 ### Wifi DKMS:
 cd ~/drivers/rtl8812AU
@@ -124,17 +124,11 @@ If wifi stops connecting but still lists networks:
 ### Sublime 3
 	https://www.sublimetext.com/docs/3/linux_repositories.html#apt
 
-### Docker apt-cacher-ng
+##### Fix sublime 3 hot_exit not working
 
-see: https://github.com/sameersbn/docker-apt-cacher-ng
+	rm ~/.config/sublime-text-3/Local/Session.sublime_session
 
-### handbreak
-
-	sudo add-apt-repository ppa:stebbins/handbrake-releases
-	sudo apt-get update
-	sudo apt-get install handbrake-gtk handbrake-cli
-
-##### Settings
+##### Sublime 3 Settings
 
 	{
 		"always_show_minimap_viewport": true,
@@ -165,10 +159,31 @@ see: https://github.com/sameersbn/docker-apt-cacher-ng
 		"trim_trailing_white_space_on_save": false
 	}
 
+### Docker apt-cacher-ng
+
+see: https://github.com/sameersbn/docker-apt-cacher-ng
+
+### handbreak
+
+	sudo add-apt-repository ppa:stebbins/handbrake-releases
+	sudo apt-get update
+	sudo apt-get install handbrake-gtk handbrake-cli
+
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg virtualbox gameconqueror lm-sensors bzr inkscape xclip
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg gameconqueror lm-sensors bzr inkscape xclip tree tmux iotop powertop nethogs libmp3lame0 audacity cups python3-setuptools libgtk-3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev alacarte
 
+
+### Fix ttf fonts error
+source: http://www.diolinux.com.br/2017/01/ttf-mscorefonts-installer-erro-ubuntu-fix.html
+
+	sudo apt purge ttf-mscorefonts-installer
+	wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb -P ~/Downloads
+	sudo apt install ~/Downloads/ttf-mscorefonts-installer_3.6_all.deb
+
+### Mount & Blade Warban Fix
+
+sudo apt-get install libaudio2:i386 libglib2.0-0:i386
 
 ### SQLiteBrowser
 
@@ -206,6 +221,11 @@ Search for driver in: http://www.nvidia.com/Download/index.aspx
 	File Size:	73.68 MB
 
 	sudo apt-get install nvidia-375
+
+Reboot
+
+	Open Nvidia Control Panel
+	Change Resolution from Auto to Monitor's Native. And change Frequency from Auto to monitor's native (144hz for me).
 
 source: https://linuxconfig.org/how-to-install-the-latest-nvidia-drivers-on-ubuntu-16-04-xenial-xerus
 
@@ -281,7 +301,7 @@ Save then issue a mount --all:
 	cd ~/docker
 	git clone https://github.com/ngineered/nginx-php-fpm.git
 	cd nginx-php-fpm
-	
+
 
 old: sudo apt-get install mysql-server mysql-client libmysqlclient-dev libmysqlclient-dev php libapache2-mod-php php-mcrypt php-mysql php-mbstring php-cli php-xml php-curl
 
@@ -298,9 +318,10 @@ Right click, format: %A %d/%m/%Y %B %r (%j)
 	Download from https://golang.org/dl/
 
 	tar -C /usr/local -xzf go1.8.linux-amd64.tar.gz
-	echo "export PATH=\$PATH:/usr/local/go/bin" >> .profile
-	echo "export PATH=\$PATH:$(go env GOPATH)/bin" >> .profile
-	source ~/.profile
+
+	subl ~/.profile
+
+PATH="$HOME/bin:$HOME/.local/bin:/usr/local/go/bin:$HOME/go/bin:$PATH"
 
 ##### Upgrade
 
@@ -316,13 +337,38 @@ Download new version from https://golang.org/dl/
 ### Visual Studio Code
 https://code.visualstudio.com/Download
 
+##### Custom Icon (differ from Sublime 3)
+
+Download: https://iconverticons.com/icons/a6f4b751accdedb6/
+(in /media/dev/Data/dev/vscode_icon)
+
+	sudo cp /media/dev/Data/dev/vscode_icon/512x512.png /usr/share/code/resources/app/resources/linux/code.png
+	sudo cp /media/dev/Data/dev/vscode_icon/512x512.png /usr/share/pixmaps/code.png
+
+	cp /media/dev/Data/dev/vscode_icon/16x16.png ~/.local/share/icons/hicolor/16x16/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/24x24.png ~/.local/share/icons/hicolor/24x24/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/32x32.png ~/.local/share/icons/hicolor/32x32/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/48x48.png ~/.local/share/icons/hicolor/48x48/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/64x64.png ~/.local/share/icons/hicolor/64x64/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/128x128.png ~/.local/share/icons/hicolor/128x128/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/256x256.png ~/.local/share/icons/hicolor/256x256/apps/VSCode.png
+	cp /media/dev/Data/dev/vscode_icon/512x512.png ~/.local/share/icons/hicolor/512x512/apps/VSCode.png
+
+	subl ~/.local/share/applications/code.desktop
+
+Set this in both lines:
+
+	Icon=VSCode
+
+Logout and in again if needed.
+
 ##### Extensions
 * https://marketplace.visualstudio.com/items?itemName=lukehoban.Go
 * https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker
 
 After installing Golang: Open VS Code. Press CTRL+Shift+P and run: `Go: Install Tools`.
 
-Preferences -> File Icon Theme -> Seti (Visual Studio Code)
+File -> Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 
 ##### VS Code Custom keybindings.json:
 	[
@@ -368,7 +414,8 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 ##### VS Code settings.json:
 	{
 	    "workbench.welcome.enabled": false,
-	    "editor.fontSize": 14,
+	    "editor.insertSpaces": false,
+	    "editor.fontSize": 16,
 	    // Pick 'gofmt', 'goimports' or 'goreturns' to run on format.
 	    "go.formatTool": "goimports",
 	    // Configure glob patterns for excluding files and folders.
@@ -392,7 +439,7 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 	    "editor.mouseWheelScrollSensitivity": 1,
 	    "files.autoSave": "off",
 	    "files.autoSaveDelay": 1000,
-	    "editor.fontFamily": "'Ubuntu Mono','DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
+	    "editor.fontFamily": "'DejaVu Sans Mono','Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
 	    "workbench.iconTheme": "vs-seti",
 	    // Use gotype on the file currently being edited and report any semantic or syntactic errors found after configured delay.
 	    "go.liveErrors": {
@@ -402,7 +449,11 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 	    "go.useLanguageServer": false,
 	    "go.autocompleteUnimportedPackages": true,
 	    "telemetry.enableTelemetry": false,
-	    "telemetry.enableCrashReporter": false
+	    "telemetry.enableCrashReporter": false,
+	    "window.zoomLevel": 0,
+
+	      // Flags to pass to `go vet` (e.g. ['-all', '-shadow'])
+	      "go.vetFlags": ["-all", "-shadow", "-shadowstrict"]
 	}
 
 ##### VS Code tasks.json:
@@ -427,7 +478,7 @@ Preferences -> File Icon Theme -> Seti (Visual Studio Code)
 ##### VS Code always highlight minimap
 
 Change file
-C:\Program Files (x86)\Microsoft VS Code\resources\app\out\vs\workbench\electron-browser\workbench.main.css
+sudo subl /usr/share/code/resources/app/out/vs/workbench/workbench.main.css
 
 .minimap-slider{opacity:0 --> .minimap-slider{opacity:1
 
@@ -534,7 +585,18 @@ source: https://appdb.winehq.org/objectManager.php?sClass=version&iId=34727
 - Change mouse button to the one you want: (in advanced preferences) Video -> Filters -> Pause click -> Mouse Button
 - Restart VLC for settings to take place
 
+VLC Bonus: Fix playback for some mp4 videos:
+
+source: https://www.idealshare.net/video-converter/vlc-mp4-solution.html
+
+	Preferences -> Video
+	Check the box for Window decorations (if it's unchecked).
+	Set the Output drop-down menu to X11 video output (XCB).
+
+
 ### VirtualBox
+
+First install latest Qt online installer: https://www1.qt.io/download-open-source/#section-2
 
 	sudo bash -c "echo \"deb http://download.virtualbox.org/virtualbox/debian xenial contrib\" >> /etc/apt/sources.list"
 
@@ -613,6 +675,8 @@ Add item to Preferences -> Main Menu
 ### Leviathan - Kraken x61 watercooler controller
 https://github.com/jaksi/leviathan
 
+	sudo easy_install3 pip
+	sudo python3 -m pip install leviathan
 	sudo levctl -s 30 -m off
 
 ### Configure kupfer
@@ -634,11 +698,12 @@ Disable all plugins but:
 
 - Reboot PC
 - Click on HP tray icon HP tray icon should appear.
-- Click CUPS web interface (opens browser on http://localhost:631)
-- Type linux username/password
+- Click CUPS web interface (opens browser on http://localhost:631/admin)
 - Click `Add Printer` button
+- Type linux username/password
 - Select `Deskjet 3540 series (HP Deskjet 3540 series)` from Discovered Printers
-- Next, Next, Finish
+- Next, Next, Add Printer
+- Set defaults: Black Ink Only, Draft Quality
 - Reboot PC
 
 ### Configure OpenBox
@@ -680,7 +745,7 @@ subl ~/.config/openbox/lubuntu-rc.xml
 	</keybind>
 	<keybind key="W-t">
 		<action name="Execute">
-		<command>x-terminal-emulator</command>
+    	<command>roxterm -d /home/dev/go/src/github.com/brunocassol/bot</command>
 		</action>
 	</keybind>
 	<keybind key="W-l">
@@ -773,13 +838,13 @@ Run `xev` and scroll headset volume control to get keys (XF86AudioLowerVolume an
 	    mode NotifyUngrab, detail NotifyAncestor
 
 	KeymapNotify event, serial 48, synthetic NO, window 0x0,
-	    keys:  2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   4   
-	           0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   
+	    keys:  2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   4
+	           0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
 
 	KeyRelease event, serial 48, synthetic NO, window 0x1800001,
 	    root 0x1d1, subw 0x0, time 4969627, (-2174,124), root:(207,1358),
 	    state 0x0, keycode 122 (keysym 0x1008ff11, XF86AudioLowerVolume), same_screen YES,
-	    XLookupString gives 0 bytes: 
+	    XLookupString gives 0 bytes:
 	    XFilterEvent returns: False
 
 	FocusOut event, serial 48, synthetic NO, window 0x1800001,
@@ -789,13 +854,13 @@ Run `xev` and scroll headset volume control to get keys (XF86AudioLowerVolume an
 	    mode NotifyUngrab, detail NotifyAncestor
 
 	KeymapNotify event, serial 48, synthetic NO, window 0x0,
-	    keys:  2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   8   
-	           0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   
+	    keys:  2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   8
+	           0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
 
 	KeyRelease event, serial 48, synthetic NO, window 0x1800001,
 	    root 0x1d1, subw 0x0, time 4970164, (-2174,124), root:(207,1358),
 	    state 0x0, keycode 123 (keysym 0x1008ff13, XF86AudioRaiseVolume), same_screen YES,
-	    XLookupString gives 0 bytes: 
+	    XLookupString gives 0 bytes:
 	    XFilterEvent returns: False
 
 Set openbox shortcuts to call the volume commands:
@@ -819,16 +884,13 @@ Make sure the volume shotcuts look like this:
 source: https://unix.stackexchange.com/questions/62887/volume-hot-keys-in-crunchbang-dont-work
 
 ### .bashrc
-
-	subl ~/.bashrc
-
 	alias gits='git status'
 	alias gita='git add . && git status'
 	alias gitc='git commit -m "."'
 	alias gitp='git push'
 	alias gitd='git diff'
 	alias gitall='git add . && git status && git commit -m "." && git push'
-	alias wififix='cd /media/dev/Data/downloads/Drivers/Carbon-x99/rtl8812AU && sudo make install && sudo modprobe 8812au'
+	alias wififix='cd /media/dev/Data/downloads/Drivers/Carbon-x99/rtl8812AU && sudo make CC=/usr/bin/gcc-5 && sudo make install && sudo modprobe 8812au'
 
 	alias config='subl ~/.bashrc'
 	alias comparedir='diff -qr '
@@ -838,43 +900,43 @@ source: https://unix.stackexchange.com/questions/62887/volume-hot-keys-in-crunch
 	alias bye='sudo bash -c "sleep 7200; pm-suspend"'
 	alias gdrivecompareremote='rclone -n -v --retries 1 --exclude /gdocs/ sync remote: /media/dev/Data/gdrive'
 
-	alias ll='ls -alF'
-	alias la='ls -A'
-	alias l='ls -CF'
 
 	alias dockerphpstorm='docker run --name phpstorm -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.PhpStorm2017.1:/home/duser/.PhpStorm2017.1 -v ~/php:/workspace brunocassol/phpstorm'
 	alias dockernginxphp='docker run --name nginx-php -d nginx-php-fpm'
 	alias dockeraptcachestart='docker run --name apt-cacher-ng -d --restart=always --publish 3142:3142 --volume /srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng sameersbn/apt-cacher-ng:latest'
 	alias dockeraptcachelog='docker exec -it apt-cacher-ng tail -f /var/log/apt-cacher-ng/apt-cacher.log'
 
+	alias youtube-mp3='youtube-dl --extract-audio --audio-format mp3'
+
 	pidusingport() {
-	    sudo netstat -nlp | grep :$1
+		sudo netstat -nlp | grep :$1
 	}
 	search() {
-	    grep -Rils $1 $2
+		grep -Rils $1 $2
 	}
 	winprocess() {
-	    xprop | grep WM_CLASS
+		xprop | grep WM_CLASS
 	}
 	extract () {
-	    if [ -f $1 ] ; then
-	    case $1 in
-	        *.tar.bz2)   tar xvjf $1    ;;
-	        *.tar.gz)    tar xvzf $1    ;;
-	        *.bz2)       bunzip2 $1     ;;
-	        *.rar)       unrar x $1       ;;
-	        *.gz)        gunzip $1      ;;
-	        *.tar)       tar xvf $1     ;;
-	        *.tbz2)      tar xvjf $1    ;;
-	        *.tgz)       tar xvzf $1    ;;
-	        *.zip)       unzip $1       ;;
-	        *.Z)         uncompress $1  ;;
-	        *.7z)        7z x $1        ;;
-	        *)           echo "don't know how to extract '$1'..." ;;
-	    esac
-	    else
-	    echo "'$1' is not a valid file!"
-	    fi
+		if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2)   tar xvjf $1    ;;
+			*.tar.gz)    tar xvzf $1    ;;
+			*.tar.xz)    tar xf $1    ;;
+			*.bz2)       bunzip2 $1     ;;
+			*.rar)       unrar x $1       ;;
+			*.gz)        gunzip $1      ;;
+			*.tar)       tar xvf $1     ;;
+			*.tbz2)      tar xvjf $1    ;;
+			*.tgz)       tar xvzf $1    ;;
+			*.zip)       unzip $1       ;;
+			*.Z)         uncompress $1  ;;
+			*.7z)        7z x $1        ;;
+			*)           echo "don't know how to extract '$1'..." ;;
+		esac
+		else
+		echo "'$1' is not a valid file!"
+		fi
 	}
 
 ### Sexy bash prompt
