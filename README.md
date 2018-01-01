@@ -159,6 +159,13 @@ If wifi stops connecting but still lists networks:
 		"trim_trailing_white_space_on_save": false
 	}
 
+### Set python3 as default
+try:
+	sudo update-alternatives --config python
+
+else:
+	sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
 ### Docker apt-cacher-ng
 
 see: https://github.com/sameersbn/docker-apt-cacher-ng
