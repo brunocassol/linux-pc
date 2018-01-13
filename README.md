@@ -107,6 +107,25 @@ If wifi stops connecting but still lists networks:
 - save
 - restart network with:		sudo service network-manager restart
 
+
+### Wifi 2nd option:
+
+source: https://github.com/gnab/rtl8812au
+
+	cd /media/dev/Data/downloads/Drivers/Carbon-x99/driver3/
+	OPTIONAL: git clone https://github.com/gnab/rtl8812au .
+
+	make
+	sudo make isntall
+
+Replug wifi if need be
+
+### Wifi In case of error implicit declaration of function ‘allow_signal’
+
+
+	/media/dev/Data/downloads/Drivers/Carbon-x99/rtl8812AU/include/osdep_service.h:343:2: error: implicit declaration of function ‘allow_signal’ [-Werror=implicit-function-declaration]
+	allow_signal(SIGTERM);
+
 ##### Extra info
 
 - modules installed to: `/lib/modules/4.4.0-75-generic/kernel/drivers/net/wireless`
@@ -178,7 +197,7 @@ see: https://github.com/sameersbn/docker-apt-cacher-ng
 
 
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg gameconqueror lm-sensors bzr inkscape xclip tree tmux iotop powertop nethogs libmp3lame0 audacity cups python3-setuptools libgtk-3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev alacarte lynx gdmap xdotool
+	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg gameconqueror lm-sensors bzr inkscape xclip tree tmux iotop powertop nethogs libmp3lame0 audacity cups python3-setuptools libgtk-3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev alacarte lynx gdmap xdotool gmtp scrot
 
 
 ### Fix ttf fonts error
