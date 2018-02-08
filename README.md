@@ -116,7 +116,7 @@ source: https://github.com/gnab/rtl8812au
 	OPTIONAL: git clone https://github.com/gnab/rtl8812au .
 
 	make
-	sudo make isntall
+	sudo make install
 
 Replug wifi if need be
 
@@ -195,9 +195,8 @@ see: https://github.com/sameersbn/docker-apt-cacher-ng
 	sudo apt-get update
 	sudo apt-get install handbrake-gtk handbrake-cli
 
-
 ### Install software
-	sudo apt-get install build-essential linux-headers-generic mysql-workbench curl gimp gdebi git hexchat kupfer lxkeymap ssh gnome-alsamixer gnome-screenshot libreoffice unetbootin p7zip-full vlc htop zlib1g-dev libssl-dev libyaml-dev python-pygments gpick sqliteman git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev wine apt-file gparted youtube-dl deluge aptitude ffmpeg gedit roxterm libvlccore-dev pkg-config unrar unzip wget zenity cabextract meld gcc libc6-dev libx11-dev xorg-dev libxtst-dev libpng++-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxkbcommon-dev libpcre++-dev gnome-font-viewer calibre gitg gameconqueror lm-sensors bzr inkscape xclip tree tmux iotop powertop nethogs libmp3lame0 audacity cups python3-setuptools libgtk-3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev alacarte lynx gdmap xdotool gmtp scrot
+	sudo apt-get install alacarte apt-file aptitude audacity build-essential bzr cabextract calibre cups curl deluge ffmpeg filezilla gameconqueror gcc gdebi gdmap gedit gimp git git-core gitg gmtp gnome-alsamixer gnome-font-viewer gnome-screenshot gparted gpick hexchat htop inkscape iotop kupfer libc6-dev libcurl4-openssl-dev libffi-dev libgtk-3-dev libmp3lame0 libpcre++-dev libpng++-dev libreadline-dev libreoffice libsqlite3-dev libssl-dev libvlccore-dev libwebkitgtk-3.0-dev libwebkitgtk-dev libx11-dev libx11-xcb-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libxml2-dev libxslt1-dev libxtst-dev libyaml-dev linux-headers-generic lm-sensors lxkeymap lynx meld mysql-workbench nethogs p7zip-full pkg-config powertop python-pygments python-software-properties python3-setuptools roxterm scrot sqlite3 sqliteman ssh tmux tree unetbootin unrar unzip vlc wget wine x11-xkb-utils xcb xclip xdotool xorg-dev youtube-dl zenity zlib1g-dev mercurial
 
 
 ### Fix ttf fonts error
