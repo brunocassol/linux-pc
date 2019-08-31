@@ -68,6 +68,11 @@ source: https://askubuntu.com/questions/178324/how-to-skip-kernel-update
 
 see https://github.com/brunocassol/phpstorm.git
 
+### git SSH keys (tested on Windows)
+
+	eval $(ssh-agent -s)
+	ssh-add ~/.ssh/*
+
 ### Wifi - Edimax EW-7811UAC AC600
 
 	mkdir -p ~/drivers
